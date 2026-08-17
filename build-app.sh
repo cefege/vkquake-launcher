@@ -4,10 +4,12 @@ set -eu
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 BUILD_DIR="$ROOT/build"
 APP="$BUILD_DIR/vkQuake Launcher.app"
+ZIP="$BUILD_DIR/vkQuake-Launcher.zip"
 MACOS="$APP/Contents/MacOS"
 RESOURCES="$APP/Contents/Resources"
 
 rm -rf "$APP"
+rm -f "$ZIP"
 mkdir -p "$MACOS" "$RESOURCES"
 
 swiftc -parse-as-library -O \
@@ -25,4 +27,6 @@ for asset in base.jpg hipnotic.jpg rogue.jpg dopa.jpg mg1.jpg mg3.jpg vkquake.ic
 done
 
 codesign --force --deep --sign - "$APP"
+ditto -c -k --keepParent "$APP" "$ZIP"
 printf 'Built %s\n' "$APP"
+printf 'Packaged %s\n' "$ZIP"

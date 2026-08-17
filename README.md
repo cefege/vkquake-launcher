@@ -2,17 +2,13 @@
 
 A native macOS campaign launcher for [vkQuake](https://github.com/Novum/vkQuake). It provides one-click campaign selection, official shareware detection, custom mod installation, loose BSP map launching, and clear diagnostics when engine or game data is missing.
 
-Made by **Mihai Mateias** and released under the [MIT License](LICENSE).
-
-![vkQuake Launcher campaign library](docs/launcher-overview.png)
-
-![Dawn of the Machine, custom content, and project link](docs/launcher-campaigns.png)
+![vkQuake Launcher campaign library](docs/launcher.png)
 
 ## Download and install
 
-1. Download `vkQuake-Launcher.dmg` from the [latest release](https://github.com/cefege/vkquake-launcher/releases/latest).
-2. Open the DMG.
-3. Copy `vkQuake Launcher.app` into your Quake folder **beside** the `rerelease` folder. Do not put it inside `rerelease` or `/Applications`.
+1. Download `vkQuake-Launcher.zip` from the [latest release](https://github.com/cefege/vkquake-launcher/releases/latest).
+2. Double-click the ZIP to extract `vkQuake Launcher.app`.
+3. Move `vkQuake Launcher.app` into your Quake folder **beside** the `rerelease` folder. Do not put it inside `rerelease` or `/Applications`.
 4. Double-click `vkQuake Launcher.app`. If macOS blocks the ad-hoc signed build, Control-click it, choose **Open**, then confirm **Open**.
 5. Choose an installed campaign card.
 
@@ -57,7 +53,7 @@ Building from source also requires the Xcode Command Line Tools (`swiftc`).
 ./build-app.sh
 ```
 
-The unsigned development build is written to `build/vkQuake Launcher.app` and then ad-hoc signed.
+The ad-hoc signed development app is written to `build/vkQuake Launcher.app`. A release-ready archive containing that app is written to `build/vkQuake-Launcher.zip`.
 
 Campaign preview images are included in `Resources/` so source builds retain the illustrated campaign cards. These Quake promotional images are not covered by the MIT License; all artwork rights remain with their respective owners. See [NOTICE](NOTICE) for sources and attribution.
 
@@ -78,3 +74,5 @@ An optional `Resources/vkquake.icns` supplies the application icon.
 Report bugs at <https://github.com/cefege/vkquake-launcher/issues>.
 
 Include your macOS version, vkQuake version, selected campaign or custom content, and the exact warning shown by the launcher. Do not upload copyrighted game data.
+
+Made by **Mihai Mateias** and released under the [MIT License](LICENSE).

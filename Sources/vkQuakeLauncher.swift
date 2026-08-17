@@ -68,7 +68,7 @@ private final class CampaignCardButton: NSButton {
                 width: sourceWidth,
                 height: sourceHeight
             )
-            image.draw(in: cardRect, from: sourceRect, operation: .sourceOver, fraction: isHighlighted ? 0.70 : 0.88, respectFlipped: true, hints: [.interpolation: NSImageInterpolation.high])
+            image.draw(in: cardRect, from: sourceRect, operation: .sourceOver, fraction: isHighlighted ? 0.82 : 1.0, respectFlipped: true, hints: [.interpolation: NSImageInterpolation.high])
         }
 
         let gradient = NSGradient(colorsAndLocations:
@@ -89,8 +89,10 @@ private final class CampaignCardButton: NSButton {
             .kern: 1.4,
             .paragraphStyle: paragraph
         ]
+        let compactCard = cardRect.height <= 140
+        let titleSize: CGFloat = compactCard ? (campaign.title.count > 24 ? 20 : 22) : (campaign.title.count > 24 ? 22 : 26)
         let titleAttributes: [NSAttributedString.Key: Any] = [
-            .font: NSFont(name: "Avenir Next Condensed Demi Bold", size: campaign.title.count > 24 ? 22 : 26) ?? NSFont.systemFont(ofSize: 24, weight: .bold),
+            .font: NSFont(name: "Avenir Next Condensed Demi Bold", size: titleSize) ?? NSFont.systemFont(ofSize: titleSize, weight: .bold),
             .foregroundColor: NSColor.white,
             .kern: 0.2,
             .paragraphStyle: paragraph
@@ -101,10 +103,13 @@ private final class CampaignCardButton: NSButton {
             .paragraphStyle: paragraph
         ]
 
-        let inset: CGFloat = 22
-        campaign.edition.uppercased().draw(in: NSRect(x: inset, y: 69, width: cardRect.width - 44, height: 16), withAttributes: editionAttributes)
-        campaign.title.draw(in: NSRect(x: inset, y: 38, width: cardRect.width - 44, height: 34), withAttributes: titleAttributes)
-        campaign.subtitle.draw(in: NSRect(x: inset, y: 18, width: cardRect.width - 44, height: 18), withAttributes: subtitleAttributes)
+        let inset: CGFloat = compactCard ? 18 : 22
+        let horizontalInset = inset * 2
+        let titleHeight: CGFloat = compactCard ? 28 : 34
+        let editionY: CGFloat = compactCard ? 66 : 69
+        campaign.edition.uppercased().draw(in: NSRect(x: inset, y: editionY, width: cardRect.width - horizontalInset, height: 16), withAttributes: editionAttributes)
+        campaign.title.draw(in: NSRect(x: inset, y: 38, width: cardRect.width - horizontalInset, height: titleHeight), withAttributes: titleAttributes)
+        campaign.subtitle.draw(in: NSRect(x: inset, y: 18, width: cardRect.width - horizontalInset, height: 18), withAttributes: subtitleAttributes)
 
         if hovered || isHighlighted {
             (hovered ? NSColor(calibratedRed: 0.90, green: 0.57, blue: 0.30, alpha: 0.95) : NSColor.white.withAlphaComponent(0.8)).setStroke()
@@ -165,15 +170,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func buildWindow() {
         window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 920, height: 820),
+            contentRect: NSRect(x: 0, y: 0, width: 860, height: 740),
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered,
             defer: false
         )
-        window.title = "vkQuake Launcher"
+        window.title = "vkQuake Campaigns"
         window.titlebarAppearsTransparent = true
-        window.titleVisibility = .hidden
-        window.minSize = NSSize(width: 760, height: 600)
+        window.titleVisibility = .visible
+        window.minSize = NSSize(width: 720, height: 560)
         window.center()
 
         let backdrop = NSVisualEffectView()
@@ -197,25 +202,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let stack = NSStackView()
         stack.orientation = .vertical
         stack.alignment = .leading
-        stack.spacing = 16
-        stack.edgeInsets = NSEdgeInsets(top: 30, left: 32, bottom: 28, right: 32)
+        stack.spacing = 12
+        stack.edgeInsets = NSEdgeInsets(top: 42, left: 28, bottom: 22, right: 28)
         stack.translatesAutoresizingMaskIntoConstraints = false
         content.addSubview(stack)
 
-        let eyebrow = label("NATIVE CAMPAIGN LIBRARY", size: 12, weight: .semibold, color: NSColor(calibratedRed: 0.88, green: 0.52, blue: 0.28, alpha: 1), tracking: 2.2)
-        let title = label("vkQuake", size: 42, weight: .bold, color: .white, tracking: -0.8)
-        let intro = label("Choose a campaign. Every card launches the signed Apple Silicon build with its verified game data and soundtrack.", size: 13, weight: .regular, color: NSColor(calibratedWhite: 0.72, alpha: 1), tracking: 0)
-        intro.maximumNumberOfLines = 2
-        intro.lineBreakMode = .byWordWrapping
 
-        stack.addArrangedSubview(eyebrow)
-        stack.setCustomSpacing(2, after: eyebrow)
-        stack.addArrangedSubview(title)
-        stack.setCustomSpacing(4, after: title)
-        stack.addArrangedSubview(intro)
-        stack.setCustomSpacing(22, after: intro)
-
-        let baseCard = card(for: campaigns[0], height: 195)
+        let baseCard = card(for: campaigns[0], height: 170)
         stack.addArrangedSubview(baseCard)
         baseCard.widthAnchor.constraint(equalTo: stack.widthAnchor, constant: -64).isActive = true
 
@@ -225,16 +218,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             row.spacing = 16
             row.distribution = .fillEqually
             row.translatesAutoresizingMaskIntoConstraints = false
-            let first = card(for: campaigns[pairStart], height: 154)
+            let first = card(for: campaigns[pairStart], height: 136)
             row.addArrangedSubview(first)
             if pairStart + 1 < campaigns.count {
-                row.addArrangedSubview(card(for: campaigns[pairStart + 1], height: 154))
+                row.addArrangedSubview(card(for: campaigns[pairStart + 1], height: 136))
             }
             stack.addArrangedSubview(row)
             row.widthAnchor.constraint(equalTo: stack.widthAnchor, constant: -64).isActive = true
         }
 
-        let dawnCard = card(for: campaigns[5], height: 175)
+        let dawnCard = card(for: campaigns[5], height: 150)
         stack.addArrangedSubview(dawnCard)
         dawnCard.widthAnchor.constraint(equalTo: stack.widthAnchor, constant: -64).isActive = true
 
@@ -265,7 +258,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let spacer = NSView()
         spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
         footer.addArrangedSubview(spacer)
-        footer.addArrangedSubview(label("Made by Mihai Mateias · MIT", size: 11, weight: .regular, color: NSColor(calibratedWhite: 0.55, alpha: 1), tracking: 0))
+        footer.addArrangedSubview(label("Made by Mihai Mateias", size: 11, weight: .regular, color: NSColor(calibratedWhite: 0.55, alpha: 1), tracking: 0))
         let reportButton = NSButton(title: "View on GitHub ↗", target: self, action: #selector(openProject))
         reportButton.isBordered = false
         reportButton.font = NSFont(name: "Avenir Next Demi Bold", size: 11) ?? NSFont.systemFont(ofSize: 11, weight: .semibold)
@@ -288,8 +281,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             stack.leadingAnchor.constraint(equalTo: content.leadingAnchor),
             stack.trailingAnchor.constraint(equalTo: content.trailingAnchor),
             stack.topAnchor.constraint(equalTo: content.topAnchor),
-            stack.bottomAnchor.constraint(equalTo: content.bottomAnchor),
-            intro.widthAnchor.constraint(equalTo: stack.widthAnchor, constant: -64)
+            stack.bottomAnchor.constraint(equalTo: content.bottomAnchor)
         ])
 
         window.makeKeyAndOrderFront(nil)
@@ -317,7 +309,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func actionButton(_ title: String, action: Selector) -> NSButton {
         let button = NSButton(title: title, target: self, action: action)
         button.bezelStyle = .rounded
-        button.controlSize = .large
+        button.controlSize = .regular
         button.font = NSFont(name: "Avenir Next Demi Bold", size: 13) ?? NSFont.systemFont(ofSize: 13, weight: .semibold)
         return button
     }
