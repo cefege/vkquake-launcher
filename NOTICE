@@ -1,0 +1,36 @@
+vkQuake Launcher artwork notice
+
+The Swift source code and project files are licensed under the MIT License.
+The campaign preview images in Resources/ are promotional Quake artwork and
+screenshots. They are NOT licensed under the MIT License. Quake and related
+artwork are trademarks or copyrighted works of their respective owners,
+including ZeniMax Media Inc., Bethesda Softworks, id Software, MachineGames,
+Hipnotic Interactive, and Rogue Entertainment.
+
+Image sources used by this project:
+
+base.jpg
+https://res.cloudinary.com/dewzjk72j/image/authenticated/s--vEHzFuPy--/c_lfill,w_1200,h_630/f_auto:image,q_auto/v1/remote-media/5grpX7QHxBCgyWyrloau5-QUAKE_logo_HERO_1920x870.jpg
+
+hipnotic.jpg
+https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/9040/header.jpg
+
+rogue.jpg
+https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/9030/header.jpg
+
+dopa.jpg
+https://kotaku.com/igdb/image/upload/t_original/scpjmc.jpg
+
+mg1.jpg
+https://kotaku.com/igdb/image/upload/t_original/scpjm9.jpg
+
+mg3.jpg
+https://res.cloudinary.com/dewzjk72j/image/authenticated/s--L5Hm8cWQ--/g_xy_center,x_w_mul_0.33,y_h_mul_0.47,c_fill,w_1544,h_882/c_lfill,h_ih/c_lfill,h_882/f_auto:image,q_auto/v1/cms/Quake-DOTM_Thumb_16x9-01_hof40a
+
+vkquake.icns
+Copied from the signed Mac Source Ports vkQuake application bundle. The icon
+is part of the vkQuake project and is not relicensed under this project's MIT
+License.
+
+This project is an independent launcher and is not affiliated with or endorsed
+by ZeniMax, Bethesda, id Software, MachineGames, or the vkQuake project.

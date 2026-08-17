@@ -266,11 +266,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
         footer.addArrangedSubview(spacer)
         footer.addArrangedSubview(label("Made by Mihai Mateias · MIT", size: 11, weight: .regular, color: NSColor(calibratedWhite: 0.55, alpha: 1), tracking: 0))
-        let reportButton = NSButton(title: "Report a bug ↗", target: self, action: #selector(reportBug))
+        let reportButton = NSButton(title: "View on GitHub ↗", target: self, action: #selector(openProject))
         reportButton.isBordered = false
         reportButton.font = NSFont(name: "Avenir Next Demi Bold", size: 11) ?? NSFont.systemFont(ofSize: 11, weight: .semibold)
         reportButton.contentTintColor = NSColor(calibratedRed: 0.88, green: 0.52, blue: 0.28, alpha: 1)
-        reportButton.toolTip = "Open the vkQuake Launcher issue tracker on GitHub"
+        reportButton.toolTip = "Open the vkQuake Launcher project on GitHub"
         footer.addArrangedSubview(reportButton)
         stack.addArrangedSubview(footer)
         footer.widthAnchor.constraint(equalTo: stack.widthAnchor, constant: -64).isActive = true
@@ -322,8 +322,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return button
     }
 
-    @objc private func reportBug() {
-        NSWorkspace.shared.open(URL(string: "https://github.com/cefege/vkquake-launcher/issues")!)
+    @objc private func openProject() {
+        NSWorkspace.shared.open(URL(string: "https://github.com/cefege/vkquake-launcher")!)
     }
 
     @objc private func playCampaign(_ sender: CampaignCardButton) {

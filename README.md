@@ -4,13 +4,24 @@ A native macOS campaign launcher for [vkQuake](https://github.com/Novum/vkQuake)
 
 Made by **Mihai Mateias** and released under the [MIT License](LICENSE).
 
-## Requirements
+![vkQuake Launcher campaign library](docs/launcher-overview.png)
+
+![Dawn of the Machine, custom content, and project link](docs/launcher-campaigns.png)
+
+## Download and install
+
+1. Download `vkQuake-Launcher.dmg` from the [latest release](https://github.com/cefege/vkquake-launcher/releases/latest).
+2. Open the DMG.
+3. Copy `vkQuake Launcher.app` into your Quake folder **beside** the `rerelease` folder. Do not put it inside `rerelease` or `/Applications`.
+4. Double-click `vkQuake Launcher.app`. If macOS blocks the ad-hoc signed build, Control-click it, choose **Open**, then confirm **Open**.
+5. Choose an installed campaign card.
+
+## Runtime requirements
 
 - macOS 11 or newer
-- Xcode Command Line Tools (`swiftc`)
 - A lawful vkQuake installation and Quake game data
 
-The launcher does **not** include vkQuake, Quake game data, campaign files, or Bethesda/MachineGames artwork.
+The launcher does **not** include vkQuake, Quake game data, or campaign files.
 
 ## Expected installation layout
 
@@ -29,7 +40,18 @@ Quake/
 
 The launcher resolves this layout relative to its own location, so the complete `Quake` folder can be moved without breaking hard-coded paths.
 
+## Use the launcher
+
+- **Campaigns:** Click any installed campaign card. The launcher verifies the required data before starting vkQuake with the correct arguments.
+- **Official demo:** A shareware installation containing only `id1/pak0.pak` is identified as **Quake Shareware** and launches Episode One.
+- **Mods:** Click **Install a Mod…**, select an extracted mod folder containing a PAK, PK3, PK4, `progs.dat`, or BSP, then choose **Install and Play**. Reserved official directories are never overwritten.
+- **Loose maps:** Click **Play a BSP Map…** and select a valid Quake BSP29 or BSP2 file. The launcher installs it under `rerelease/custom/maps` and starts the map.
+- **Dawn of the Machine:** The card is informational until the official `mg3` data reaches your game library and a Dawn-capable vkQuake build is installed and verified.
+- **Project page:** Click **View on GitHub ↗** in the lower-right corner of the launcher.
+
 ## Build
+
+Building from source also requires the Xcode Command Line Tools (`swiftc`).
 
 ```bash
 ./build-app.sh
@@ -37,18 +59,9 @@ The launcher resolves this layout relative to its own location, so the complete 
 
 The unsigned development build is written to `build/vkQuake Launcher.app` and then ad-hoc signed.
 
-Campaign artwork is optional. To reproduce the illustrated local build, provide appropriately licensed JPEGs in `Resources/` named:
+Campaign preview images are included in `Resources/` so source builds retain the illustrated campaign cards. These Quake promotional images are not covered by the MIT License; all artwork rights remain with their respective owners. See [NOTICE](NOTICE) for sources and attribution.
 
-```text
-base.jpg
-hipnotic.jpg
-rogue.jpg
-dopa.jpg
-mg1.jpg
-mg3.jpg
-```
-
-An optional `Resources/vkquake.icns` supplies the application icon. Publisher artwork and game assets are intentionally excluded from this MIT-licensed repository.
+An optional `Resources/vkquake.icns` supplies the application icon.
 
 ## Safety behavior
 
