@@ -1,0 +1,6 @@
+.DS_Store
+build/
+Resources/*.jpg
+Resources/*.jpeg
+Resources/*.png
+Resources/*.icns
